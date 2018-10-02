@@ -28,4 +28,8 @@ class ofApp : public ofBaseApp{
         glm::vec2 pressedPos =
         glm::vec2 (ofGetWidth()*0.5, ofGetHeight()*0.5);
         int birdNum = 50;
+    
+        glm::vec2 foodPos;
+        bool mouseP = false;
+        float foodR = 5;
 };
