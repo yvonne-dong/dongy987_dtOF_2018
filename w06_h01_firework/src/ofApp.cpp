@@ -22,20 +22,20 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-//    glm::vec2 mousePos = glm::vec2(ofGetMouseX(), ofGetMouseY());
+    glm::vec2 mousePos = glm::vec2(ofGetMouseX(), ofGetMouseY());
 //
     for (int i=0; i<particleSystems.size(); i++){
-//        glm::vec2 repulsion;
-//        glm::vec2 repDir = mousePos - particleSystems[i].pos;
-//        float distance = glm::length(repDir);
-//        if (distance > 0) {
-//            glm::vec2 normDir = repDir / distance;
-//            if (distance < 100) {
-//                repulsion = -normDir;
-//            }
-//        }
-//        
-//        particleSystems[i].applyMouseForce(repulsion);
+        glm::vec2 repulsion;
+        glm::vec2 repDir = mousePos - particleSystems[i].pos;
+        float distance = glm::length(repDir);
+        if (distance > 0) {
+            glm::vec2 normDir = repDir / distance;
+            if (distance < 100) {
+                repulsion = -normDir;
+            }
+        }
+        
+        particleSystems[i].applyMouseForce(repulsion);
         particleSystems[i].applyForce(gravity);
         particleSystems[i].update();
     }

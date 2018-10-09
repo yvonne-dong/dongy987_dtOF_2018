@@ -15,7 +15,7 @@ public:
     vector<ParticleSystem> particleSystems;
     glm::vec2 gravity;
     
-    glm::vec2 pos1 = glm::vec2(ofGetWidth() * 0.5-200, 100);
+    glm::vec2 pos1 = glm::vec2(ofGetWidth() * 0.5-250, 100);
     float count = 1;
     //glm::vec2 mousePos = glm::vec2(ofGetMouseX(), ofGetMouseY());
 };
