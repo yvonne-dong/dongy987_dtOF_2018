@@ -9,24 +9,40 @@ void ofApp::setup(){
     ofSetBackgroundAuto(false);
     ofSetFrameRate(60.);
     
-    glm::vec2 center  = ofGetWindowSize() * .5;               // center screen
-    
+    glm::vec2 center  = ofGetWindowSize() * .5;
+   
     float maxAngle = TWO_PI;
     for (float theta = 0.; theta < maxAngle; theta += .05){
-        float radius = 300;
+        float mainRadius = 300;
         glm::vec2 pos;
-        pos.x = center.x + (cos(theta) * radius);
-        pos.y = center.y + (sin(theta) * radius);
+        pos.x = center.x + (cos(theta) * mainRadius);
+        pos.y = center.y + (sin(theta) * mainRadius);
         
-        Hoop hoopCircle = Hoop(pos, 1.);
-        hoop.push_back(hoopCircle);
+        Hoop mainHoopCircle = Hoop(pos, 1.);
+        hoop.push_back(mainHoopCircle);
     }
     
+    //other one
+    for (int i = 1; i < 10; i ++) {
+        glm::vec2 randomPos = glm::vec2(ofGetWidth()*.5+ofRandom(-200,200),ofGetHeight()*.5+ofRandom(-200,200));
+        for (float alpha = 0.; alpha < maxAngle; alpha += .05){
+            float radius = 80;
+            glm::vec2 pos;
+            pos.x = randomPos.x + (cos(alpha) * radius);
+            pos.y = randomPos.y + (sin(alpha) * radius);
+            
+            Hoop hoopCircle = Hoop(pos, 1.);
+            hoop.push_back(hoopCircle);
+        }
+    }
+    
+    //moving stars
     for (int m=0; m<nMovers; m++)
     {
         moveStars.push_back(MoveStar());
     }
     
+    //attractor stars
     for (int a=0; a<nAttractors; a++){
         AttractStar attractStar;
         attractStar.pos   = center;
@@ -40,15 +56,15 @@ void ofApp::setup(){
 void ofApp::update(){
     glm::vec2 mousePos = glm::vec2(ofGetMouseX(), ofGetMouseY());
     
+    //update attractor
     for (int a=0; a<nAttractors; a++){
         attractStars[a].update();
     }
     
+    //update force for moving stars
     for (int a=0; a<nAttractors; a++){
         for (int m=0; m<nMovers; m++){
-            // calculate force
             glm::vec2 force = attractStars[a].getForce(moveStars[m]);
-            // apply force
             moveStars[m].applyForce(force);
         }
     }
@@ -56,7 +72,7 @@ void ofApp::update(){
     // update movers
     for (int m=0; m<nMovers; m++){
         
-        for (int i=0; i<hoop.size(); i++){
+        for (int i=0; i< hoop.size(); i++){
             
             glm::vec2 diff = moveStars[m].pos - hoop[i].pos;
             float dist = glm::length(diff);
@@ -69,7 +85,7 @@ void ofApp::update(){
                 hoop[i].applyForce(repulsion);
             }
             
-            if (mouseDist < 100. && mouseDist != 0.){
+            if (mouseDist < 50. && mouseDist != 0.){
                 glm::vec2 mouseDiffNorm  = mouseDiff / mouseDist;
                 glm::vec2 mouseRepulsion = mouseDiffNorm * -.5;
                 hoop[i].applyForce(mouseRepulsion);
@@ -87,6 +103,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    glm::vec2 mousePos = glm::vec2(ofGetMouseX(), ofGetMouseY());
     ofSetColor(0, 0, 0, 100);
     ofDrawRectangle(0,0, ofGetWidth(),ofGetHeight());
     
@@ -96,14 +113,29 @@ void ofApp::draw(){
     ofPushStyle();
     ofSetColor(255);
     ofSetLineWidth(2);
-    for (int i=0; i<hoop.size(); i++){
-        if (i < hoop.size()-1){
+    
+    //main circle
+    for (int i=0; i< mainHoopSize; i++){
+        if (i < mainHoopSize-1){
             ofDrawLine(hoop[i].pos, hoop[i+1].pos);
         }
         hoop[i].draw();
     }
-    ofDrawLine(hoop[0].pos, hoop[TWO_PI/.05].pos);
+    ofDrawLine(hoop[0].pos, hoop[mainHoopSize].pos);
+    
+    
+    //other circles
+    for (int i = 1; i < 3; i ++) {
+        for (int j= int(mainHoopSize*i+1); j< mainHoopSize * (i+1); j++){
+            if (j < mainHoopSize * (i+1)-1){
+                ofDrawLine(hoop[j].pos, hoop[j+1].pos);
+            }
+            hoop[j].draw();
+        }
+        ofDrawLine(hoop[mainHoopSize*i+1].pos, hoop[mainHoopSize*(i+1)].pos);
+    }
     ofPopStyle();
+    
     
     for (int a=0; a<nAttractors; a++){
         attractStars[a].draw();
@@ -113,14 +145,4 @@ void ofApp::draw(){
     {
         moveStars[m].draw();
     }
-}
-
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-    
-//    if (key == ' ')
-//    {
-//        bSpin = !bSpin;    // toggle wind
-//    }
-    
 }
