@@ -74,7 +74,7 @@ void Bird::addRepulsion(Bird _b, float radius, float strength){
         frc.y = frc.y + diff.y * strength * pct;
         _b.frc.x = _b.frc.x - diff.x * strength * pct;
         _b.frc.y = _b.frc.y - diff.y * strength * pct;
-        cout<<"pct = "<<pct<<endl;
+        cout<<"bAm = "<<bAmCloseEnough<<endl;
         
     }
 }
