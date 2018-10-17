@@ -9,13 +9,13 @@ MoveStar::MoveStar(){
     acc     = glm::vec2(0,0);
 }
 
-//MoveStar::MoveStar(glm::vec2 _pos, float _mass){
-//    pos     = _pos;
-//    mass    = _mass;
-//    
-//    vel     = glm::vec2(0,0);
-//    acc     = glm::vec2(0,0);
-//}
+MoveStar::MoveStar(glm::vec2 _pos, float _mass){
+    pos     = _pos;
+    mass    = _mass;
+    
+    vel     = glm::vec2(0,0);
+    acc     = glm::vec2(0,0);
+}
 
 void MoveStar::applyForce(glm::vec2 force){
     acc += force/mass;
