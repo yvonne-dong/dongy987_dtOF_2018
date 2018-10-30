@@ -1,13 +1,13 @@
 
 
 #include "drawText.hpp"
-const int nText = 130;
+const int nText = 50;
 
 Text::Text(uint32_t _letter){
     pos = glm::vec3(ofRandom(ofGetWidth()), ofRandom(ofGetHeight()), 0);
     //set the input letter
     letter = _letter;
-    testFont.load("Batang.ttf", 30, true, true, true);
+    testFont.load("kenpixel.ttf", 12, true, true, true);
     bool vflip = true;
     bool filled = true;
     filled = false;
@@ -23,14 +23,14 @@ Text::Text(uint32_t _letter, glm::vec3 _pos){
     pos = _pos;
     letter = _letter;
     //set the input letter
-    testFont.load("Batang.ttf", 30, true, true, true);
+    testFont.load("kenpixel.ttf", 12, true, true, true);
     bool vflip = true;
     bool filled = true;
     filled = false;
     testCharContour = testFont.getCharacterAsPoints(letter, vflip, filled);
     for (int i=0; i<nText; i++){
         for (int j = 0; j < (int)testCharContour.getOutline().size(); j ++) {
-            ofPolyline outline = testCharContour.getOutline()[j].getResampledBySpacing(3);
+            ofPolyline outline = testCharContour.getOutline()[j].getResampledBySpacing(2);
             for(int k = 0; k < outline.size(); k++){
                 glm::vec3 thisPoint = glm::vec3(outline[k].x+pos.x, -outline[k].y-pos.y,pos.z);
                 TextParticle textParticle =TextParticle();

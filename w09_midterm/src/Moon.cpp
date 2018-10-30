@@ -85,7 +85,6 @@ void Moon::draw(){
     
     ofSetColor(color);
     ofDrawSphere(pos, mass * 2.);
-    
     ofPopStyle();
     
 }

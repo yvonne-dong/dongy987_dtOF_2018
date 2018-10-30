@@ -96,7 +96,7 @@ void ofApp::draw(){
         //ofPushMatrix();
         camera.transformGL();
         ofPushMatrix();
-        ofTranslate(0,0,-150);
+        ofTranslate(0,0,-100);
         for (int i=0; i<texts.size(); i++){
             texts[i].draw();
         }
@@ -106,7 +106,6 @@ void ofApp::draw(){
         
         ofPopMatrix();
         camera.restoreTransformGL();
-        //ofPopMatrix();
         //draw boundary
         //box.draw();
         ofPopStyle();
@@ -134,7 +133,7 @@ void ofApp::keyPressed(int key){
         && key != OF_KEY_RIGHT && key != OF_KEY_DOWN) {
         uint32_t letterEnter;
         letterEnter = key;
-        addPos = posCount * 30;
+        addPos = posCount * 15;
         texts.push_back(Text(letterEnter, glm::vec3(startPos.x+addPos,0,0)) );
         posCount++;
     }
