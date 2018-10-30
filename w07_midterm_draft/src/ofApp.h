@@ -29,6 +29,7 @@ class ofApp : public ofBaseApp{
         vector<Moon> moons;
         Box box;
         ofEasyCam camera;
+        float moveIncrement = 5;
     
         glm::vec3 center   = glm::vec3(0,0,0);
 };

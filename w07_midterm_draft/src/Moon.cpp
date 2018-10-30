@@ -8,6 +8,7 @@ Moon::Moon(){
     
     vel     = glm::vec3(0,0,0);
     acc     = glm::vec3(0,0,0);
+    ofSetSphereResolution(3);
 }
 
 Moon::Moon(glm::vec3 _pos, float _mass){
@@ -16,6 +17,7 @@ Moon::Moon(glm::vec3 _pos, float _mass){
     
     vel     = glm::vec3(0,0,0);
     acc     = glm::vec3(0,0,0);
+    ofSetSphereResolution(3);
 }
 
 void Moon::applyForce(glm::vec3 force){
@@ -82,7 +84,6 @@ void Moon::draw(){
     ofColor color   = cSlow.lerp(cFast, percent);    // "lerp" == interpolate
     
     ofSetColor(color);
-    ofFill();
     ofDrawSphere(pos, mass * 2.);
     
     ofPopStyle();

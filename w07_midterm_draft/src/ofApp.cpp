@@ -1,10 +1,12 @@
 #include "ofApp.h"
-const int nPlanets = 10;
+const int nPlanets = 20;
 const int nMoons = 15;
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetFrameRate(60.f);
     ofBackground(0);
+    camera.setNearClip(0.0);
+    camera.setFarClip(10000);
     
     for (int m=0; m<nMoons; m++)
     {
@@ -14,9 +16,9 @@ void ofApp::setup(){
     for (int i=0; i<nPlanets; i++){
         Planet planet;
         planet.pos = center;
-        planet.pos.x += ofRandom(-200, 200);
-        planet.pos.y += ofRandom(-200, 200);
-        planet.pos.z += ofRandom(-200, 200);
+        planet.pos.x += ofRandom(-300, 300);
+        planet.pos.y += ofRandom(-300, 300);
+        planet.pos.z += ofRandom(-300, 300);
         planets.push_back(planet);
     }
     
@@ -25,6 +27,11 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    if (ofGetFrameNum() > 1){
+        camera.setNearClip(0);
+        camera.setFarClip(1000000);
+    }
+
     
     for (int p=0; p<nPlanets; p++)
     {
@@ -49,7 +56,7 @@ void ofApp::update(){
 void ofApp::draw(){
     camera.begin();
     ofEnableDepthTest();
-    ofFill();
+    ofNoFill();
     for (int p=0; p<planets.size(); p++)
     {
         planets[p].draw();
@@ -69,7 +76,15 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    if (key == OF_KEY_UP){
+        camera.dolly(-moveIncrement);
+    } else if (key == OF_KEY_LEFT){
+        camera.truck(-moveIncrement);
+    } else if (key == OF_KEY_RIGHT){
+        camera.truck(moveIncrement);
+    } else if (key == OF_KEY_DOWN){
+        camera.dolly(moveIncrement);
+    }
 }
 
 //--------------------------------------------------------------
