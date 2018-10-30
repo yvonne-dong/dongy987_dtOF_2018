@@ -101,8 +101,8 @@ void ofApp::draw(){
             texts[i].draw();
         }
         
-        ofDrawBitmapString("arrow key + mouse: navigation", glm::vec3(-30,-60,0));
-        ofDrawBitmapString("type in words then hit space to send out the message", glm::vec3(-50,-70,0));
+        ofDrawBitmapString("arrow key + mouse: navigation", glm::vec3(-20,-40,0));
+        ofDrawBitmapString("type in words then hit space to send out the message", glm::vec3(-35,-45,0));
         
         ofPopMatrix();
         camera.restoreTransformGL();
