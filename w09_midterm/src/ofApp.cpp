@@ -1,6 +1,6 @@
 #include "ofApp.h"
 const int nPlanets = 30;
-const int nMoons = 25;
+const int nMoons = 35;
 //--------------------------------------------------------------
 void ofApp::setup(){
     
@@ -38,7 +38,7 @@ void ofApp::update(){
     {
         planets[p].update();
     }
-    
+    //apply force to moons
     for (int p=0; p<nPlanets; p++){
         for (int m=0; m<nMoons; m++){
             glm::vec3 force = planets[p].getForce(moons[m]);
@@ -70,64 +70,49 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     float time = ofGetElapsedTimef();
-    //cout<<time<<endl;
-    
-    float brightness = ofMap(sin(time), -1, 1, 0, 50);
-    //ofBackground(brightness);
+    cout<<time<<endl;
     camera.begin();
     ofEnableDepthTest();
     camPos = camera.getPosition();
     
-//    if (time < 10) {
-//        float aliveTime = ofGetElapsedTimef();
-//        ofPushStyle();
-//        camera.transformGL();
-//        ofPushMatrix();
-//        float alpha = ofMap(aliveTime, 0, 10, 255, 0);
-//        ofColor color = ofColor::fromHsb(127,0,0,alpha);
-//        cout<<alpha<<endl;
-//        ofSetColor(255,255,255,10);
-//        ofFill();
-//        ofTranslate(0,0,-50);
-//        //ofDrawBox(glm::vec3(0,0,0), 5, 5,3);
-////        ofDrawBox(glm::vec3(0,0,0), ofGetWidth(), ofGetHeight(),3);
-//        ofDrawRectangle(glm::vec3(0,0,0), ofGetWidth(), ofGetHeight());
-//        ofPopMatrix();
-//        camera.restoreTransformGL();
-//        ofPopStyle();
-//    }
-    
-    ofPushStyle();
-    ofSetColor(255);
-    ofNoFill();
-    //draw planets
-    for (int p=0; p<planets.size(); p++)
-    {
-        planets[p].draw();
-    }
-    //draw moons
-    for (int m=0; m<nMoons; m++)
-    {
-        moons[m].draw();
-    }
-    //type words
-    //ofPushMatrix();
-    camera.transformGL();
-    ofPushMatrix();
-    ofTranslate(0,0,-150);
-    for (int i=0; i<texts.size(); i++){
-        texts[i].draw();
+    if (time < 5) {
+        ofDrawBitmapString("All That Is Solid Melts Into Air", glm::vec3(-120,0,0));
+        ofDrawBitmapString("by Yvonne Dong", glm::vec3(-50,-20,0));
+    } else {
+        ofPushStyle();
+        ofSetColor(255);
+        ofNoFill();
+        //draw planets
+        for (int p=0; p<planets.size(); p++)
+        {
+            planets[p].draw();
+        }
+        //draw moons
+        for (int m=0; m<nMoons; m++)
+        {
+            moons[m].draw();
+        }
+        //type words
+        //ofPushMatrix();
+        camera.transformGL();
+        ofPushMatrix();
+        ofTranslate(0,0,-150);
+        for (int i=0; i<texts.size(); i++){
+            texts[i].draw();
+        }
+        
+        ofDrawBitmapString("arrow key + mouse: navigation", glm::vec3(-30,-60,0));
+        ofDrawBitmapString("type in words then hit space to send out the message", glm::vec3(-50,-70,0));
+        
+        ofPopMatrix();
+        camera.restoreTransformGL();
+        //ofPopMatrix();
+        //draw boundary
+        //box.draw();
+        ofPopStyle();
     }
     
-    ofDrawBitmapString("arrow key + mouse: navigation", glm::vec3(-30,-60,0));
-    ofDrawBitmapString("type in words then hit space to send out the message", glm::vec3(-50,-70,0));
     
-    ofPopMatrix();
-    camera.restoreTransformGL();
-    //ofPopMatrix();
-    //draw boundary
-    //box.draw();
-    ofPopStyle();
     
     ofDisableDepthTest();
     camera.end();
