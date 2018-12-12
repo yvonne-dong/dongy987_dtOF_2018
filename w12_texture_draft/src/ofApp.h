@@ -22,9 +22,14 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		
-    ofPlanePrimitive plane;
-    ofLight sun;
+    ofSpherePrimitive sphere;
+    glm::vec3 mixOscillator;
+    float amplitude, sinFrequency, cosFrequency;
     
     ofEasyCam cam;
     ofxPanel gui;
+    ofLight light;
+    
+    unsigned char * pixelData;
+    ofImage img;
 };
